@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Malla interactiva · Psicología UC (ingreso 2022)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Paleta, tipografía y formas basadas en el Kit Digital UC (kitdigital.uc.cl) */
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;
+--bg:#fff;--card:#fff;--surf:#F6F6F6;--tx:#000;--mut:#707070;--bd:#EAEAEA;--ring:#0176DE;--btn:#0176DE;--navy:#173F8A;--ink:#03122E;--gold:#FEC60D;
+--pre:#F24F4F;--pre-tx:#C62828;--post:#00AA00;--post-tx:#007A29;--sh:0 0 8px rgba(136,136,136,.18);
+--bas:#FEC60D;--pro:#8CC573;--gen:#707070;--otro:#EAEAEA;--opt:#F5B042;--gentx:#fff;--lib:#CFE6FA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0a1428;--card:#111c33;--surf:#111c33;--tx:#eef2f8;--mut:#a9b4c6;--bd:#26365a;--ring:#5aaaf2;--pre:#ff7b7b;--pre-tx:#ff9a9a;--post:#2ecc71;--post-tx:#4fd18b;--sh:none;--bas:#8d7a12;--pro:#3f7a33;--gen:#4f5a6e;--otro:#26365a;--opt:#9a6612;--lib:#1d3b5e}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0a1428;--card:#111c33;--surf:#111c33;--tx:#eef2f8;--mut:#a9b4c6;--bd:#26365a;--ring:#5aaaf2;--pre:#ff7b7b;--pre-tx:#ff9a9a;--post:#2ecc71;--post-tx:#4fd18b;--sh:none;--bas:#8d7a12;--pro:#3f7a33;--gen:#4f5a6e;--otro:#26365a;--opt:#9a6612;--lib:#1d3b5e}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 16px/24px "Roboto",Arial,sans-serif;letter-spacing:.3px}
+.band{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold);margin-top:calc(-1 * env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px)}
+.band .in{max-width:1200px;margin:auto;padding:24px 20px 20px}
+h1{font-size:clamp(1.6rem,3.2vw,2.5rem);line-height:1.2;font-weight:700;margin:0 0 6px;letter-spacing:0}
+.sub{color:#dbe6f7;font-size:14px;line-height:20px;margin:0;letter-spacing:.28px}
+header{max-width:1200px;margin:auto;padding:20px 20px 6px}
+.bar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:4px;box-shadow:var(--sh);padding:14px 16px}
+.prog{flex:1 1 260px}
+.track{height:8px;background:var(--bd);border-radius:4px;margin-top:6px;overflow:hidden}
+.fill{height:100%;background:var(--btn);width:0;transition:width .25s}
+button{font:500 14px/16px "Roboto",Arial,sans-serif;letter-spacing:.3px;color:var(--ring);background:var(--card);border:1px solid var(--ring);border-radius:4px;padding:9px 16px;cursor:pointer}
+button:hover{background:var(--btn);color:#fff;border-color:var(--btn)}
+#tg{background:var(--btn);color:#fff;border-color:var(--btn)}
+#tg:hover{background:var(--navy);border-color:var(--navy)}
+button:focus-visible,.c:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--ring);outline-offset:2px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:12px 0 0;font-size:14px;line-height:20px;color:var(--mut)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:2px;margin-right:6px;vertical-align:-2px;border:1px solid rgba(0,0,0,.2)}
+.wrap{overflow-x:auto;padding:8px 20px 16px;max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(8,minmax(150px,1fr));gap:10px;min-width:1260px;max-width:1500px;margin:auto}
+.col h2{font-size:16px;line-height:24px;font-weight:700;margin:0 0 8px;padding-bottom:6px;border-bottom:2px solid var(--btn);letter-spacing:.25px}
+.col h2 small{font-weight:400;color:var(--mut);font-size:14px;margin-left:6px}
+.c{position:relative;display:block;width:100%;text-align:left;margin:0 0 8px;padding:8px;border:1px solid rgba(0,0,0,.14);border-radius:4px;cursor:pointer;min-height:68px;transition:opacity .15s}
+.c:hover{filter:brightness(.97)}
+.c .nm{width:calc(100% - 26px);min-width:0;font:500 14px/18px "Roboto",Arial,sans-serif;letter-spacing:.2px;color:inherit;background:rgba(128,128,128,.18);border:1px dashed rgba(128,128,128,.85);border-radius:2px;padding:3px 5px}
+.c .nm::placeholder{color:inherit;opacity:.75}
+.c .nm:focus{background:#fff;color:#000;border-style:solid;outline:2px solid var(--ring)}
+.fdim{opacity:.25}
+.ph{border:1px dashed var(--bd);border-radius:4px;padding:10px;color:var(--mut);font-size:14px;line-height:20px}
+.bars{display:flex;gap:6px;align-self:stretch;min-height:430px}
+.vb{flex:1;display:flex;align-items:center;justify-content:center;margin:0;padding:12px 0;border:0;border-radius:2px;background:var(--btn);color:#fff;font:700 11px/1 "Roboto",Arial,sans-serif;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:.14em;white-space:nowrap;text-transform:uppercase;cursor:default}
+button.vb{cursor:pointer}
+button.vb:hover{background:var(--navy);color:#fff}
+.vb.lock{opacity:.5}
+.vb.on,button.vb.on:hover{background:var(--post);color:#fff;opacity:1}
+.t-lib{background:var(--lib);color:#000}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .t-lib{color:#f2f2f0}}
+:root[data-theme="dark"] .t-lib{color:#f2f2f0}
+.c .nm::placeholder{opacity:.9}
+.c .ar{width:100%;margin-top:6px;font:400 12px/16px "Roboto",Arial,sans-serif;padding:3px 4px;border:1px solid rgba(128,128,128,.85);border-radius:2px;background:rgba(255,255,255,.92);color:#000}
+.steps>li>div{flex:1}
+.steps label{font-size:14px;line-height:20px;color:var(--mut)}
+.steps input{accent-color:var(--btn)}
+.sub{list-style:none;margin:6px 0 0;padding:0;font-size:14px}
+.sub li{padding:2px 0;color:var(--mut)}
+.sub li.on{color:var(--post-tx);font-weight:500}
+.crumbs{max-width:1200px;margin:auto;padding:14px 20px 0;font-size:14px;line-height:20px;color:var(--mut)}
+.crumbs a{color:var(--ring);text-decoration:none;font-weight:500}.crumbs a:hover{text-decoration:underline}.crumbs span{margin:0 8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:12px}
+.stat{background:var(--card);border:1px solid var(--bd);border-top:3px solid var(--gold);border-radius:4px;box-shadow:var(--sh);padding:12px 16px}
+.stat b{display:block;font-size:28px;line-height:32px;font-weight:700;color:var(--navy);letter-spacing:0}
+.stat span{font-size:14px;line-height:20px;color:var(--mut)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stat b{color:#8fc2ff}}
+:root[data-theme="dark"] .stat b{color:#8fc2ff}
+.legend .chip{display:inline-flex;align-items:center;font:400 14px/20px "Roboto",Arial,sans-serif;letter-spacing:.2px;padding:4px 10px;border:1px solid var(--bd);border-radius:4px;background:var(--card);color:var(--tx)}
+.legend .chip:hover{border-color:var(--btn);background:var(--card);color:var(--tx)}
+.legend .chip.on{background:var(--btn);border-color:var(--btn);color:#fff}
+.tb{width:100%;border-collapse:collapse;margin-top:6px}.tb td{padding:9px 6px;border-bottom:1px solid var(--bd)}
+.tb td:nth-child(2){white-space:nowrap;font-weight:500}.tb td:nth-child(3){width:30%}
+.mb{height:6px;background:var(--bd);border-radius:3px;overflow:hidden}.mb i{display:block;height:100%;background:var(--btn)}
+.steps{list-style:none;margin:6px 0 0;padding:0;counter-reset:s}
+.steps>li{counter-increment:s;display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--bd)}
+.steps>li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--bd);color:var(--tx);display:grid;place-items:center;font-weight:700;font-size:14px}
+.steps>li.on::before{content:"\2713";background:var(--post);color:#fff}
+.c .n{font-size:14px;line-height:18px;font-weight:500;padding-right:24px;letter-spacing:.2px}
+.c .m{display:flex;justify-content:space-between;font-size:12px;line-height:16px;margin-top:8px;letter-spacing:.2px}
+.t-bas{background:var(--bas)}.t-pro{background:var(--pro)}.t-gen{background:var(--gen);color:var(--gentx)}.t-otro{background:var(--otro)}.t-opt{background:var(--opt)}
+.t-bas,.t-pro,.t-opt,.t-otro{color:#000}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .t-bas,:root:not([data-theme="light"]) .t-pro,:root:not([data-theme="light"]) .t-opt,:root:not([data-theme="light"]) .t-otro{color:#f2f2f0}}
+:root[data-theme="dark"] .t-bas,:root[data-theme="dark"] .t-pro,:root[data-theme="dark"] .t-opt,:root[data-theme="dark"] .t-otro{color:#f2f2f0}
+.c.locked{opacity:.6;filter:grayscale(.5)}
+.c.done{box-shadow:inset 5px 0 0 var(--post)}
+.c.sel{outline:3px solid var(--ring);outline-offset:1px}
+.c.pre{outline:3px solid var(--pre);outline-offset:1px;opacity:1;filter:none}
+.c.post{outline:3px dashed var(--post);outline-offset:1px;opacity:1;filter:none}
+.dim .c:not(.sel):not(.pre):not(.post){opacity:.35}
+.chk{position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:2px;border:2px solid #707070;background:#fff;padding:0;display:grid;place-items:center;font-size:12px;line-height:1;color:#fff}
+.t-gen .chk{border-color:#fff}
+.chk:hover{background:#fff;color:#fff;border-color:var(--btn)}
+.c.done .chk{background:var(--post);border-color:var(--post);color:#fff}
+.c.done .n{text-decoration:line-through;text-decoration-thickness:1px}
+.star{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:2px;padding:0 4px;font-weight:400}
+.detail{max-width:1200px;margin:0 auto 24px;padding:0 20px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:4px;box-shadow:var(--sh);padding:16px 20px}
+.card h3{margin:0 0 4px;font-size:20px;line-height:24px;font-weight:700;letter-spacing:.25px}
+.card ul{margin:4px 0 10px;padding-left:18px}
+.card li{margin:2px 0}
+.link{background:none;border:0;padding:0;color:var(--ring);text-decoration:underline;font:500 16px/24px "Roboto",Arial,sans-serif;letter-spacing:.3px}
+.link:hover{background:none;color:var(--navy)}
+.ok-t{color:var(--post-tx)}.no-t{color:var(--pre-tx)}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.hint{color:var(--mut);font-size:14px;line-height:20px;margin-top:10px;letter-spacing:.28px}
+.c.failed{border-color:var(--pre)}
+.c.warn{outline:2px dashed var(--pre);outline-offset:1px}
+.tag{display:inline-block;font-size:12px;line-height:16px;font-weight:500;color:var(--pre-tx);background:var(--card);border-radius:2px;padding:0 5px;margin-top:4px}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+select,input[type=text]{font:400 14px/20px "Roboto",Arial,sans-serif;color:var(--tx);background:var(--card);border:1px solid #707070;border-radius:4px;padding:7px 10px}
+input[type=text]{min-width:220px}
+.note{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--pre);border-radius:4px;padding:10px 12px;margin:0 0 12px}
+footer{background:var(--ink);color:#fff;font-size:14px;line-height:20px;padding:20px calc(max(20px,(100% - 1160px) / 2));letter-spacing:.28px}
+</style>
+</head>
+<body>
+<div class="band"><div class="in"><h1>Malla curricular · Licenciatura en Psicología</h1>
+<p class="sub">Pontificia Universidad Católica de Chile · Título profesional de Psicólogo/a · 10 semestres (5 años) · Malla desde ingreso 2022 · Resolución VRA N°053/2021</p></div></div>
+<nav class="crumbs" aria-label="Ruta de navegación"><a href="https://www.uc.cl/" target="_blank" rel="noopener">Inicio</a><span>›</span><a href="https://psicologia.uc.cl/" target="_blank" rel="noopener">Psicología</a><span>›</span>Malla interactiva</nav>
+<header>
+<div class="stats" id="st"></div>
+<div class="bar">
+ <div class="prog"><b id="pt">0 / 400 créditos aprobados</b><div class="track"><div class="fill" id="pf"></div></div></div>
+  <button id="rs">Borrar avance</button>
+ </div>
+<div class="legend">
+ <button class="chip" data-f="b" title="Resaltar este tipo de ramo"><i style="background:var(--bas)"></i>Formación básica</button><button class="chip" data-f="p" title="Resaltar este tipo de ramo"><i style="background:var(--pro)"></i>Propios de la licenciatura</button>
+ <button class="chip" data-f="g" title="Resaltar este tipo de ramo"><i style="background:var(--gen)"></i>Formación general</button><button class="chip" data-f="o" title="Resaltar este tipo de ramo"><i style="background:var(--otro)"></i>Otros cursos</button><button class="chip" data-f="x" title="Resaltar este tipo de ramo"><i style="background:var(--opt)"></i>Optativo</button><span><i style="background:var(--lib)"></i>Créditos libres</span>
+ <span><b style="color:var(--pre)">Rojo</b>: prerrequisito</span><span><b style="color:var(--post)">Verde punteado</b>: desbloquea</span><span><span class="star">N dep.</span> ramos que dependen de este</span>
+</div>
+</header>
+<div class="wrap"><div class="grid" id="g"></div></div>
+<div class="detail"><div class="card" id="d"><b>Toca un ramo</b> para ver sus prerrequisitos y lo que desbloquea. Usa el círculo de cada tarjeta para marcarlo como aprobado. Si reprobaste o no cursaste un ramo, ábrelo y muévelo de semestre. Los ramos que dependen de uno reprobado se mueven solos para respetar los prerrequisitos, y no puedes aprobar un ramo sin aprobar antes los suyos. Cada ramo se dicta solo en semestres impares o pares; si lo repruebas, esperas al siguiente semestre en que se dicte.
+</div></div>
+<div class="detail"><div class="card" id="ln"></div></div>
+<div class="detail"><div class="card" id="dist"></div></div>
+<footer>Herramienta de apoyo no oficial, hecha a partir del diagrama curricular de la malla 2022. Confirma prerrequisitos y oferta de cursos en el catálogo UC y en Buscacursos.</footer>
+<script>
+var T={b:'Formación básica',p:'Propio de la licenciatura',g:'Formación general',o:'Otro curso',x:'Optativo',l:'Crédito libre'};
+var CL={b:'t-bas',p:'t-pro',g:'t-gen',o:'t-otro',x:'t-opt',l:'t-lib'};
+var C=[
+['PSI1103','Historia de la Psicología',10,1,'p'],['PSI1101','Procesos Psicológicos Básicos',10,1,'b'],['FIL214','Fund. Filosóficos de la Psicología',10,1,'b'],['ANT100','Paradigmas Antropológicos',10,1,'b'],['FIL185P','Ética para Psicología',10,1,'o'],['VRA100C','Español',0,1,'o'],['VRA2000','Inglés',0,1,'o'],
+['PSI1100','Taller de Integración I',10,2,'p'],['PSI1203','Metodologías de Invest. en Psicología',10,2,'b'],['PSI1204','Fund. Biológicos del Comportamiento',10,2,'b'],['PSI1206','Teorías Sociales en Psicología',10,2,'p'],['FIL2001','Filosofía ¿Para qué?',10,2,'g'],
+['PSI2301','Métodos de Invest. Cuantitativa',10,3,'p',['PSI1203']],['PSI1205','Psicología Social',10,3,'p'],['PSI2302','Neurociencias',10,3,'o',['PSI1204']],['FG1','Formación General',10,3,'g'],['FG2','Formación General',10,3,'g'],
+['PSI1200','Taller de Integración II',10,4,'p'],['PSI2300','Métodos de Invest. Cualitativa',10,4,'p',['PSI1203']],['PSI1104','Psicología del Desarrollo I',10,4,'b'],['TTF','Formación Teológica',10,4,'g'],['FG3','Formación General',10,4,'g'],
+['PSI2305','Taller de Integración III',10,5,'o',['PSI2301','PSI2300']],['PSI2304','Teorías de la Cognición',10,5,'o',[],150],['PSI1201','Psicología del Desarrollo II',10,5,'o',['PSI1104']],['PSI2403','Personalidad e Identidad',10,5,'o',[],150],['FG4','Formación General',10,5,'g'],
+['PSI2308','Inteligencia, Pensamiento y Lenguaje',10,6,'o',['PSI2304']],['PSI2307','Teoría de Sistemas',10,6,'o',[],200],['PSI2303','Psicoanálisis',10,6,'o',[],200],['PSI2309','Afectividad y Motivación',10,6,'o',[],200],['FG5','Formación General',10,6,'g'],
+['PSI2404','Taller de Integración IV',10,7,'o',[],250],['PSI2400','Evaluación Psicológica I',10,7,'o',['PSI2308']],['PSI2401','Psicopatología y Psiquiatría Adultos',10,7,'o'],['PSI2306','Modelos de Salud-Enfermedad',10,7,'o'],['FG6','Formación General',10,7,'g'],
+['PSI2405','Evaluación Psicológica II',10,8,'o',['PSI2403']],['PSI2402','Psicopatología Infanto-Juvenil',10,8,'o',['PSI2401']],['INI1','Iniciación Profesional I',10,8,'o'],['INI2','Iniciación Profesional II',10,8,'o'],['OPT','Optativo de Profundización',10,8,'x']
+].map(function(a){return{id:a[0],n:a[1],cr:a[2],s:a[3],t:a[4],pre:a[5]||[],min:a[6]||0}});
+var INI=[['PSI2406','Clínica',['PSI2401']],['PSI2407','Educacional',['PSI1104','PSI2304']],['PSI2408','Laboral-Organizacional',['PSI2403']],['PSI2409','de la Salud',['PSI2401']],['PSI2410','Comunitaria',['PSI2403']]];
+var iniPre=['PSI2401','PSI1104','PSI2304','PSI2403'];
+var LN={
+PSI2406:{n:'Psicología Clínica',c:[['PSI3540','Fundamentos de Psicoterapia',10,9,['*']],['PSI3541','Diagnóstico Psicol. Clínico y Entrevista',10,9,['*']],['PSI3542','Indicadores Psicopatol. en Tests',10,9,['*','PSI2405']],['PSI3544','Estrategias de Intervención en Psic. Clínica',10,9,['*']],['LO1','Optativo de Profundización',10,9,[]],['PSI3648','Métodos de Invest. en Psicol. Clínica y Psicot.',10,10,['PSI3540']],['PSI2546','Práctica en Psicología Clínica',30,10,['PSI3540','PSI3541','PSI3542','PSI3544']],['LO2','Optativo de Profundización',10,10,[]]]},
+PSI2407:{n:'Psicología Educacional',c:[['PSI3500','Psicología del Aprendizaje y la Enseñanza I',10,9,['*']],['PSI3502','Diseño y Eval. de Programas Educativos',10,9,['*']],['PSI3503','Análisis del Sistema Educacional',10,9,['*']],['PSI3506','Taller de Intervención en Psic. Educac.',10,9,['*']],['LO1','Optativo de Profundización',10,9,[]],['PSI3504','Psicología del Aprendiz. y la Enseñ. II',10,10,['PSI3500']],['PSI2537','Práctica en Psicología Educacional',30,10,['PSI3500','PSI3502','PSI3503','PSI3506']],['LO2','Optativo de Profundización',10,10,[]]]},
+PSI2408:{n:'Psicología Laboral-Organizacional',c:[['PSI3520','Comportamiento Organizacional',10,9,['*']],['PSI3521','Evaluación de Personas en Organizaciones',10,9,['*']],['PSI3523','Gestión de Personas',10,9,['*']],['PSI3525','Gestión de Organizaciones',10,9,['*']],['PSI3524','Selección de Personas',10,9,['*']],['PSI2518','Práctica en Psicología Laboral',30,10,['PSI3520','PSI3521','PSI3523','PSI3524','PSI3525']],['LO1','Optativo de Profundización',10,10,[]],['LO2','Optativo de Profundización',10,10,[]]]},
+PSI2409:{n:'Psicología de la Salud',c:[['PSI3560','Desarrollos Teóricos en Psic. de la Salud',10,9,['*']],['PSI3561','Programas y Polít. Públicas en Salud',10,9,['*']],['PSI3566','Diseño de Interv. en Psicología de la Salud',10,9,['*']],['PSI3567','Intervenciones Familiares en Psic. de la Salud',10,9,['*']],['LO1','Optativo de Profundización',10,9,[]],['PSI2509','Práctica en Psicología de la Salud',30,10,['PSI3560','PSI3561','PSI3566','PSI3567']],['PSI3564','Prom. y Prev. de Salud en Niños y Adolesc. (una de las dos)',10,10,['*']],['PSI3568','Prom. o Preven. de Salud en el Trabajo (una de las dos)',10,10,['*']],['LO2','Optativo de Profundización',10,10,[]]]},
+PSI2410:{n:'Psicología Social Comunitaria',c:[['PSI3584','Procesos Grupales',10,9,['*']],['PSI3589','Estrategias de Intervención en Comunidades',10,9,['*']],['PSI3587','Teorías y Model. en Psicología Comunitaria',10,9,['*']],['PSI3588','Diagnóstico de Recursos y Necesidades',10,9,['*']],['LO1','Optativo de Profundización',10,9,[]],['PSI3586','Evaluación de Programas y Proy. Sociales',10,10,['*']],['PSI2530','Práctica en Psicología Comunitaria',30,10,['PSI3584','PSI3587','PSI3588','PSI3589']],['LO2','Optativo de Profundización',10,10,[]]]}};
+function optPre(code){return INI.filter(function(o){return o[0]==code})[0][2]}
+var M={};C.forEach(function(c){M[c.id]=c;if(c.id.indexOf('INI')==0)c.pre=iniPre});
+var done={},plan={},fail={},names={},offer={},msg='',msgFor='',filt=null,area={},crd={},req={},extra=[],engLvl='',iniSel={},lineSel='',sel=null,KEY='malla-psi-uc-2022';
+try{var S=JSON.parse(localStorage.getItem(KEY)||'{}');if(S.v==2||S.v==3){done=S.done||{};plan=S.plan||{};fail=S.fail||{};names=S.names||{};offer=S.offer||{};area=S.area||{};crd=S.crd||{};req=S.req||{};extra=S.extra||[];engLvl=S.engLvl||'';iniSel=S.iniSel||{};lineSel=S.lineSel||''}else done=S}catch(e){}
+var AREAS={sb:'Salud y Bienestar',hu:'Humanidades',ct:'Ciencia y Tecnología',su:'Sustentabilidad',ar:'Artes'};
+var LAB={sb:'Salud y Bienestar',hu:'Humanidades',ct:'Ciencia y Tecnología',su:'Sustentabilidad',ar:'Artes',ia:'Interárea (cubre un área faltante)',cl:'Crédito libre'};
+function mkX(o){var c={id:o.id,n:o.n,cr:o.cr,s:o.s,t:o.t,pre:o.pre||[],min:0};C.push(c);M[c.id]=c;return c}
+function delX(id){var i=C.findIndex(function(c){return c.id==id});if(i>-1)C.splice(i,1);delete M[id];extra=extra.filter(function(o){return o.id!=id});delete done[id];delete plan[id];delete fail[id];delete area[id];delete crd[id];delete names[id]}
+extra.forEach(mkX);
+C.forEach(function(c){c.n0=c.n;c.cr0=c.cr;if(names[c.id])c.n=names[c.id];if(crd[c.id])c.cr=crd[c.id]});
+Object.keys(iniSel).forEach(function(i){if(M[i])M[i].pre=optPre(iniSel[i])});buildLine();ensureTest();
+function save(){try{localStorage.setItem(KEY,JSON.stringify({v:3,done:done,plan:plan,fail:fail,names:names,offer:offer,area:area,crd:crd,req:req,extra:extra,engLvl:engLvl,iniSel:iniSel,lineSel:lineSel}))}catch(e){}}
+function sm(c){return plan[c.id]||c.s}
+function editable(c){return /^(FG|TTF|OPT|XG|XL|LO)/.test(c.id)}
+function isLibre(c){return c.t=='l'||(/^(FG|XG)/.test(c.id)&&area[c.id]=='cl')}
+function libreCounts(){var acc=0,r={};C.filter(function(c){return isLibre(c)&&c.cr>0}).sort(function(a,b){return sm(a)-sm(b)||(a.id<b.id?-1:1)}).forEach(function(c){acc+=c.cr;r[c.id]=acc<=10});return r}
+function libOver(){var lc=libreCounts(),s=0;C.forEach(function(c){if(done[c.id]&&isLibre(c)&&!lc[c.id])s+=c.cr});return s}
+function isPool(c){return /^(FG|XG)/.test(c.id)||c.t=='l'}
+function poolDone(){var p=0,lc=libreCounts();C.forEach(function(c){if(done[c.id]&&isPool(c)&&(!isLibre(c)||lc[c.id]))p+=c.cr});return p}
+function cred(){var s=0;C.forEach(function(c){if(done[c.id]&&!isPool(c))s+=c.cr});return s+Math.min(60,poolDone())}
+function isIni(c){return c.id.indexOf('INI')==0}
+function missing(c){var m=c.pre.filter(function(p){return !done[p]});
+ if(isIni(c)&&!iniSel[c.id])return INI.some(function(o){return o[2].every(function(p){return done[p]})})?[]:['(ninguna opción cumple requisitos)'];return m}
+function avail(c){return !done[c.id]&&missing(c).length==0&&cred()>=c.min}
+function post(id){return C.filter(function(c){return c.pre.indexOf(id)>-1&&(!isIni(c)||true)})}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function render(){
+ var g=document.getElementById('g'),h='',pres=sel?M[sel].pre:[],pos=sel?post(sel).map(function(c){return c.id}):[];
+ var N=maxSem();var tp=[];for(var q=1;q<=N;q++){tp.push('minmax(150px,1fr)');if(q==8)tp.push('76px')}tp.push('76px');g.style.gridTemplateColumns=tp.join(' ');g.style.minWidth=(N*157+152)+'px';for(var s=1;s<=N;s++){
+  h+='<div class="col"><h2>'+s+'° semestre<small>'+C.filter(function(c){return sm(c)==s}).reduce(function(a,c){return a+c.cr},0)+' créditos</small></h2>';
+  C.filter(function(c){return sm(c)==s}).forEach(function(c){
+   var k='c '+CL[c.t]+(done[c.id]?' done ok':(avail(c)?'':' locked'))+(fail[c.id]&&!done[c.id]?' failed':'')+(conflict(c)?' warn':'')+(filt&&c.t!=filt?' fdim':'')+(c.id==sel?' sel':'')+(pres.indexOf(c.id)>-1?' pre':'')+(pos.indexOf(c.id)>-1?' post':'');
+   h+='<div class="'+k+'" tabindex="0" role="button" data-id="'+c.id+'" aria-label="'+esc(c.n)+'">'+(editable(c)?'<input class="nm" type="text" maxlength="60" data-nm="'+c.id+'" value="'+esc(c.n==c.n0?'':c.n).replace(/"/g,'&quot;')+'" placeholder="'+esc(c.n0)+'" aria-label="Nombre del ramo '+esc(c.n0)+'">':'<div class="n">'+esc(c.n)+'</div>')+extraBits(c)+(isLibre(c)&&c.cr>0&&!libreCounts()[c.id]?'<div class="tag">No cuenta para el avance</div>':'')+(fail[c.id]&&!done[c.id]?'<div class="tag">Reprobado</div>':'')+(conflict(c)?'<div class="tag">Revisa requisitos</div>':'')+'<div class="m"><span>'+(c.id=='XE0'?'VRA2000':c.id.length<=7&&!/^(FG|INI|OPT|X|LO)/.test(c.id)?c.id:'')+(dcn(c)>=3?' <span class="star" title="Ramos que dependen de este">'+dcn(c)+' dep.</span>':'')+'</span><span>'+(c.min?'<span class="star">'+c.min+'*</span> ':'')+c.cr+' cr</span></div>'
+   +'<button class="chk" data-chk="'+c.id+'" aria-label="Marcar '+esc(c.n)+' como aprobado" aria-pressed="'+!!done[c.id]+'">'+(done[c.id]?'✓':'')+'</button></div>';
+  });if((s==9||s==10)&&!lineSel&&!C.some(function(c){return sm(c)==s}))h+='<div class="ph">Quinto año: elige tu línea de formación en el recuadro de abajo para ver sus cursos</div>';h+='</div>';if(s==8)h+=bars(['exl','lic']);if(s==N)h+=bars(['ext','tit']);
+ }
+ g.innerHTML=h;g.className='grid'+(sel?' dim':'');
+ var t=cred();var G0=goal();document.getElementById('pt').textContent=t+' / '+G0+' créditos aprobados';document.getElementById('pf').style.width=Math.min(100,t*100/G0)+'%';
+ stats();dist();lnCard();chips();
+ detail();
+}
+function li(id){var c=M[id];return '<li><button class="link" data-go="'+id+'">'+esc(c.n)+'</button> '+(done[id]?'<span class="ok-t">✓ aprobado</span>':'<span class="no-t">pendiente</span>')+'</li>'}
+function detail(){
+ var d=document.getElementById('d');if(!sel)return;
+ var c=M[sel],sems='',i;for(i=1;i<=12;i++)sems+='<option value="'+i+'"'+(i==sm(c)?' selected':'')+(okSem(c,i)?'':' disabled')+'>'+i+'°'+(okSem(c,i)?'':' (no se dicta)')+'</option>';var oo=off(c),offOpts=[['o','Solo semestres impares (1°, 3°…)'],['e','Solo semestres pares (2°, 4°…)'],['b','Todos los semestres']].map(function(x){return '<option value="'+x[0]+'"'+(oo==x[0]?' selected':'')+'>'+x[1]+'</option>'}).join('');var h=(msg&&msgFor==sel?'<p class="note">'+esc(msg)+'</p>':'')+'<h3>'+esc(c.n)+'</h3><div style="color:var(--mut)">'+(c.id=='XE0'?'VRA2000 · ':/^(FG|INI|OPT|TTF|X|LO)/.test(c.id)?'':c.id+' · ')+c.cr+' créditos · '+c.s+'° semestre en la malla'+(sm(c)!=c.s?' · en tu plan: '+sm(c)+'°':'')+' · '+T[c.t]+'</div>';
+ h+='<p><button id="tg">'+(done[c.id]?'Quitar de aprobados':'Marcar como aprobado')+'</button> <b>'+(done[c.id]?'<span class="ok-t">Aprobado</span>':avail(c)?'<span class="ok-t">Puedes tomarlo</span>':'<span class="no-t">Aún no cumples los requisitos</span>')+'</b></p>'+(editable(c)?'<p class="ctl"><label>Nombre del ramo: <input id="nm" type="text" maxlength="60" value="'+esc(c.n==c.n0?'':c.n).replace(/"/g,'&quot;')+'" placeholder="'+esc(c.n0)+'"></label></p>':'')+'<p class="ctl"><button id="fl">'+(fail[c.id]&&!done[c.id]?'Quitar reprobado':'Lo reprobé')+'</button> <label>Semestre en mi plan <select id="sl">'+sems+'</select></label> <label>Se dicta: <select id="of">'+offOpts+'</select></label> <button id="mb" aria-label="Un semestre antes">‹ Anterior</button> <button id="mf" aria-label="Un semestre después">Siguiente ›</button> <button id="mr">Posición original ('+c.s+'°)</button></p>'+(conflict(c)?'<p class="no-t"><b>Ojo:</b> en esta posición no cumples los prerrequisitos, los créditos mínimos o el semestre en que se dicta.</p></p>':'')+'<div class="row"><div><b>Prerrequisitos</b>';
+ if(isIni(c)){h+='<p style="margin:4px 0">Se cursan dos de estas cinco opciones:</p><ul>'+INI.map(function(o){var ok=o[2].every(function(p){return done[p]});return '<li>'+o[0]+' · '+o[1]+' (req. '+o[2].join(' y ')+') '+(ok?'<span class="ok-t">✓</span>':'<span class="no-t">✗</span>')+'</li>'}).join('')+'</ul>'}
+ else{h+=(c.pre.length||c.min?'<ul>'+c.pre.map(li).join('')+(c.min?'<li>'+c.min+' créditos aprobados (llevas '+cred()+') '+(cred()>=c.min?'<span class="ok-t">✓</span>':'<span class="no-t">✗</span>')+'</li>':'')+'</ul>':'<p style="margin:4px 0">Sin prerrequisitos.</p>')}
+ h+='</div><div><b>Desbloquea</b>';var p=post(c.id);h+=p.length?'<ul>'+p.map(function(x){return li(x.id)}).join('')+'</ul>':'<p style="margin:4px 0">No es prerrequisito directo de otro ramo en el diagrama.</p>';
+ if(!isIni(c)&&INI.some(function(o){return o[2].indexOf(c.id)>-1}))h+='<p style="margin:4px 0">También cuenta como requisito de: '+INI.filter(function(o){return o[2].indexOf(c.id)>-1}).map(function(o){return o[0]+' Iniciación '+o[1]}).join(', ')+'.</p>';
+ var dc=dcn(c);if(dc)h+='<p class="no-t"><b>Cadena:</b> '+plural(dc,'ramo depende','ramos dependen')+' de este, directa o indirectamente. Si no lo apruebas, se atrasan.</p>';h+='</div></div><p class="hint">El asterisco (150*, 200*, 250*) indica el mínimo de créditos aprobados exigido en el diagrama.</p>';
+ h+=extraCtl(c);d.innerHTML=h;document.getElementById('tg').onclick=function(){toggle(c.id)};document.getElementById('fl').onclick=function(){failIt(c.id)};document.getElementById('sl').onchange=function(){moveTo(c.id,+this.value)};document.getElementById('mb').onclick=function(){moveTo(c.id,sm(c)-1,-1)};document.getElementById('mf').onclick=function(){moveTo(c.id,sm(c)+1,1)};document.getElementById('mr').onclick=function(){moveTo(c.id,c.s)};document.getElementById('of').onchange=function(){setOffer(c.id,this.value)};var nmI=document.getElementById('nm');if(nmI)nmI.onchange=function(){rename(c.id,this.value)}
+}
+function need(c){var m=0;if(isIni(c)&&!iniSel[c.id]){m=99;INI.forEach(function(o){var x=0;o[2].forEach(function(p){if(!done[p]&&sm(M[p])>x)x=sm(M[p])});if(x<m)m=x});return m==99?0:m}c.pre.forEach(function(p){if(!done[p]&&sm(M[p])>m)m=sm(M[p])});return m}
+function setPlan(id,s){s=Math.max(1,Math.min(12,s));if(s==M[id].s)delete plan[id];else plan[id]=s}
+function applyFix(){var moved={},ch=true,k=0;while(ch&&k++<14){ch=false;C.forEach(function(c){if(done[c.id])return;var n=need(c);if(n>0&&sm(c)<=n&&n<12){setPlan(c.id,fit(c,n+1,1));moved[c.id]=1;ch=true}})}return Object.keys(moved)}
+function credBefore(c){var s=0;C.forEach(function(x){if(x.id!=c.id&&(done[x.id]||sm(x)<sm(c)))s+=x.cr});return s}
+function conflict(c){if(done[c.id])return false;var n=need(c);return (n>0&&sm(c)<=n)||!okSem(c,sm(c))||credBefore(c)<c.min}
+function desc(id,seen){seen=seen||{};C.forEach(function(c){if(c.pre.indexOf(id)>-1&&!isIni(c)&&!seen[c.id]){seen[c.id]=1;desc(c.id,seen)}});return seen}
+function dcn(c){return Object.keys(desc(c.id)).length}
+function endSem(){var m=0,pd=poolDone()>=60;C.forEach(function(c){if(!done[c.id]&&!(pd&&isPool(c))&&sm(c)>m)m=sm(c)});return m}
+function maxSem(){var m=10;C.forEach(function(c){if(sm(c)>m)m=sm(c)});return Math.min(12,m)}
+function stats(){var n=C.filter(function(c){return c.cr>0&&c.t!='l'}),ap=n.filter(function(c){return done[c.id]}).length,av=C.filter(avail).length,e=endSem();if(!lineSel)e=Math.max(e,10);
+ var cells=[[cred()+' / '+goal(),'Créditos aprobados'],[ap+' / '+n.length,'Ramos aprobados'],[av,'Disponibles ahora'],[e?e+'°'+(e>10?' (+'+(e-10)+')':''):'Listo','Término estimado (semestre)']];
+ document.getElementById('st').innerHTML=cells.map(function(x){return '<div class="stat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join('')}
+function credLic(){var s=0;C.forEach(function(c){if(done[c.id]&&!c.ln&&!isPool(c))s+=c.cr});return s+Math.min(60,poolDone())}
+function goal(){var g=400;C.forEach(function(c){if(c.ln)g+=c.cr});if(lineSel=='PSI2409')g-=10;return g}
+function buildLine(){C.filter(function(c){return c.ln}).map(function(c){return c.id}).forEach(function(id){C.splice(C.indexOf(M[id]),1);delete M[id]});
+ var inis=['INI1','INI2'].filter(function(i){return iniSel[i]&&iniSel[i]==lineSel});
+ if(!lineSel||!inis.length){lineSel='';return}
+ LN[lineSel].c.forEach(function(r){var c={id:r[0],n:r[1],n0:r[1],cr:r[2],cr0:r[2],s:r[3],t:r[1].indexOf('Optativo')==0?'x':'o',pre:r[4].map(function(p){return p=='*'?inis[0]:p}),min:0,ln:1};if(names[c.id])c.n=names[c.id];C.push(c);M[c.id]=c})}
+function setLine(v){C.filter(function(c){return c.ln}).forEach(function(c){delete done[c.id];delete plan[c.id];delete fail[c.id]});lineSel=v;buildLine();save();render()}
+function setIni(id,v){if(v)iniSel[id]=v;else delete iniSel[id];M[id].pre=v?optPre(v):iniPre;if(lineSel&&!['INI1','INI2'].some(function(i){return iniSel[i]==lineSel})){setLine('');return}buildLine();applyFix();save();render()}
+function engSelect(v){var c=M['VRA2000'];msg='';msgFor=c.id;if(v=='ok'){done[c.id]=1;delete fail[c.id];setEng('');return}if(!v){setEng('');return}if(!fail[c.id]){fail[c.id]=1;delete done[c.id];setPlan(c.id,fit(c,sm(c)+1,1))}setEng(v)}
+function setCr(id,v){var c=M[id];c.cr=v;crd[id]=v;save();render()}
+function addLibre(){var o={id:'XL'+Math.floor(Math.random()*1e5),n:'Crédito libre',cr:5,s:sel&&M[sel]?sm(M[sel]):Math.max(1,endSem()),t:'l'};extra.push(o);var x=mkX(o);x.n0=o.n;x.cr0=5;sel=o.id;save();render()}
+function lnCard(){var ch=[];['INI1','INI2'].forEach(function(i){if(iniSel[i]&&ch.indexOf(iniSel[i])<0)ch.push(iniSel[i])});
+ var o='<option value="">Elegir línea…</option>'+ch.map(function(k){return '<option value="'+k+'"'+(lineSel==k?' selected':'')+'>'+LN[k].n+'</option>'}).join('');
+ document.getElementById('ln').innerHTML='<h3>Quinto año · Línea de formación profesional</h3><p style="margin:4px 0 10px">En Iniciación Profesional I y II eliges dos de las cinco líneas. De esas dos cursas una en el quinto año, con sus cursos y su práctica profesional (semestres IX y X). Para cursar la práctica debes haber aprobado el examen de licenciatura. Para titularte eliges la modalidad I (examen de título) o la modalidad II (continuar al Magíster de la Escuela, postulando en el décimo semestre); en ambas son 100 créditos de líneas de formación y 500 en total.</p>'+(ch.length?'<p class="ctl"><label>Línea que cursarás: <select data-ln="1">'+o+'</select></label></p>':'<p class="hint">Primero elige la línea en Iniciación Profesional I y II.</p>')+(lineSel?'<p class="hint">Los cursos de '+LN[lineSel].n+' aparecen en los semestres 9 y 10 de la malla. Cada práctica exige aprobar los cursos de la línea que se indican en su detalle.</p>':'')}
+function comOk(){return !!(done['VRA100C']||req.com)}
+function areasMissing(){var ar={},ia=0,miss=[];Object.keys(AREAS).forEach(function(k){ar[k]=0});C.forEach(function(c){if(/^(FG|XG)/.test(c.id)&&done[c.id]){if(AREAS[area[c.id]])ar[area[c.id]]++;else if(area[c.id]=='ia')ia++}});Object.keys(AREAS).forEach(function(k){if(!ar[k]){if(ia>0)ia--;else miss.push(AREAS[k])}});return miss}
+function ingOk(){return !!(done['VRA2000']||req.ing2||done['XE0']||done['XE4008'])}
+function gradMissing(){var m=[];if(credLic()<400)m.push('los 400 créditos de la malla ('+credLic()+'/400)');if(!ingOk())m.push('el requisito de inglés');if(!comOk())m.push('el Examen de Comunicación Escrita');var a=areasMissing();if(a.length)m.push('áreas de Formación General: '+a.join(', '));return m}
+function gradOk(){return gradMissing().length==0}
+function licOk(){return gradOk()&&!!req.exl}
+function quintoOk(){return !!lineSel&&cred()>=goal()}
+function titOk(){return licOk()&&quintoOk()&&!!req.ext}
+function bars(ks){var L={exl:'Examen licenciatura',lic:'Licenciatura en Psicología',ext:'Examen de título',tit:'Título profesional de Psicólogo/a'};
+ return '<div class="bars">'+ks.map(function(k){var on=k=='exl'?!!req.exl:k=='lic'?licOk():k=='ext'?!!req.ext:titOk(),lock=!on&&(k=='exl'?credLic()<400:k=='lic'?true:k=='ext'?!(licOk()&&quintoOk()):true),cl='vb'+(on?' on':'')+(lock?' lock':'');
+  return (k=='exl'||k=='ext')?'<button class="'+cl+'" data-bar="'+k+'" aria-pressed="'+on+'">'+L[k]+'</button>':'<div class="'+cl+'" role="img" aria-label="'+L[k]+(on?' (cumplido)':'')+'">'+L[k]+'</div>'}).join('')+'</div>'}
+function barNote(t){sel=null;render();document.getElementById('d').innerHTML='<p class="note">'+esc(t)+'</p>'}
+function barToggle(k){if(req[k]){delete req[k];if(k=='exl')delete req.ext;save();render();return}
+ if(k=='exl'&&credLic()<400){barNote('Para rendir el examen de licenciatura necesitas los 400 créditos de la malla (llevas '+credLic()+').');return}
+ if(k=='ext'){if(!licOk()){barNote('Primero debes licenciarte: marca el examen de licenciatura cuando lo apruebes.');return}if(!quintoOk()){barNote('Para el examen de título debes terminar el quinto año: elige tu línea y aprueba sus cursos y práctica ('+cred()+' de '+goal()+' créditos).');return}}
+ req[k]=1;save();render()}
+function extraBits(c){
+ if(/^(FG|XG)/.test(c.id)){var cur=area[c.id]?area[c.id]+(crd[c.id]||c.cr):'',o='<option value="">Elegir área…</option>';
+  [['sb',10],['sb',5],['hu',10],['ct',10],['su',10],['ar',10],['ia',10],['cl',10],['cl',5]].forEach(function(x){var v=x[0]+x[1];o+='<option value="'+v+'"'+(cur==v?' selected':'')+'>'+LAB[x[0]]+' · '+x[1]+' cr</option>'});
+  return '<select class="ar" data-ar="'+c.id+'" aria-label="Área de Formación General">'+o+'</select>'}
+ if(c.id=='VRA2000'){var ev=done[c.id]?'ok':engLvl,oe='<option value="">Nivel de inglés…</option><option value="ok"'+(ev=='ok'?' selected':'')+'>Aprobé el test</option>'+['EUC1000','EUC2000','EUC3000','EUC4000'].map(function(x){return '<option'+(ev==x?' selected':'')+'>'+x+'</option>'}).join('');return '<select class="ar" data-eng="1" aria-label="Nivel de inglés">'+oe+'</select>'+(fail[c.id]&&!done[c.id]&&!engLvl?'<div class="tag">Indica tu nivel de inglés</div>':'')}
+ if(c.id=='XE0'){var rv=done[c.id]?'ok':fail[c.id]?'no':'';return '<select class="ar" data-eng2="1" aria-label="Resultado de Inglés (segundo intento)"><option value="">Resultado…</option><option value="ok"'+(rv=='ok'?' selected':'')+'>Aprobé</option><option value="no"'+(rv=='no'?' selected':'')+'>Reprobé</option></select>'}
+ if(isIni(c)){var oi='<option value="">Elegir línea…</option>',oth=iniSel[c.id=='INI1'?'INI2':'INI1'];INI.forEach(function(o){oi+='<option value="'+o[0]+'"'+(iniSel[c.id]==o[0]?' selected':'')+(oth==o[0]?' disabled':'')+'>'+o[1]+' ('+o[0]+')</option>'});return '<select class="ar" data-ini="'+c.id+'" aria-label="Línea de Iniciación Profesional">'+oi+'</select>'}
+ if(/^XL/.test(c.id))return '<select class="ar" data-cr="'+c.id+'" aria-label="Créditos"><option value="5"'+(c.cr==5?' selected':'')+'>5 créditos</option><option value="10"'+(c.cr==10?' selected':'')+'>10 créditos</option></select>';
+ return ''}
+function extraCtl(c){var h='';
+ if(c.id=='VRA2000'&&fail[c.id]&&!done[c.id])h+='<div class="note"><b>¿En qué nivel quedaste?</b> Según tu nivel debes rendir ese curso y todos los siguientes hasta EUC4000 (5 créditos cada uno; son créditos libres y cuentan dentro de la Formación General solo hasta 10 créditos; el resto no cuenta para el avance curricular). Luego vuelves a rendir Inglés: la misma tarjeta reaparece en el semestre siguiente a EUC4000; si lo repruebas, EUC4008 se agrega solo al semestre siguiente y, al aprobarlo, cumples el requisito.<p class="ctl" style="margin:8px 0 0"><select id="lv"><option value="">Elegir nivel…</option>'+['EUC1000','EUC2000','EUC3000','EUC4000'].map(function(x){return '<option'+(engLvl==x?' selected':'')+'>'+x+'</option>'}).join('')+'</select></p>'+'</div>';
+ if(/^(FG|XG)/.test(c.id))h+='<p class="hint">Elige el área en el desplegable de la tarjeta. Algunos cursos de Salud y Bienestar valen 5 créditos: si eliges esa opción, agrega otro curso de 5 para completar los 10.</p>'+(c.cr==5?'<p><button data-act="addfg" data-id="'+c.id+'">Agregar otro curso de 5 créditos</button></p>':'');
+ if(c.id.charAt(0)=='X')h+='<p><button data-act="delx" data-id="'+c.id+'">Quitar este curso</button></p>';
+ return h}
+function setFG(id,v){var c=M[id];if(!v){delete area[id];delete crd[id];c.cr=c.cr0}else{area[id]=v.slice(0,2);crd[id]=+v.slice(2);c.cr=crd[id]}save();render()}
+function addFG(id){var c=M[id],o={id:'XG'+Math.floor(Math.random()*1e5),n:'Formación General',cr:5,s:sm(c),t:'g'};extra.push(o);var x=mkX(o);x.n0=o.n;x.cr0=5;if(area[id])area[o.id]=area[id];crd[o.id]=5;sel=o.id;save();render()}
+function setEng(v){var c=M['VRA2000'],b=sm(c);extra.filter(function(o){return o.id.indexOf('XE')==0}).map(function(o){return o.id}).forEach(function(id){delX(id)});engLvl=v;
+ if(v){var L=['EUC1000','EUC2000','EUC3000','EUC4000'],prev=null,k=0;L.slice(L.indexOf(v)).forEach(function(n,i){var o={id:'XE'+n.slice(3),n:n,cr:5,s:b+i,t:'l',pre:prev?[prev]:[]};extra.push(o);var x=mkX(o);x.n0=n;x.cr0=5;prev=o.id;k=i+1});var t={id:'XE0',n:'Inglés',cr:0,s:b+k,t:'o',pre:['XE4000']};extra.push(t);var y=mkX(t);y.n0=t.n;y.cr0=0}
+ save();render()}
+function ensureTest(){var N='Inglés';if(engLvl&&M['XE4000']&&!M['XE0']){var t={id:'XE0',n:N,cr:0,s:sm(M['XE4000'])+1,t:'o',pre:['XE4000']};extra.push(t);var y=mkX(t);y.n0=N;y.cr0=0}else if(M['XE0']&&M['XE0'].n0!=N){M['XE0'].n0=N;if(!names['XE0'])M['XE0'].n=N;extra.forEach(function(o){if(o.id=='XE0')o.n=N})}}
+function mkEUC8(){if(M['XE4008'])return;var l=M['XE4000'],tt=M['XE0'],o={id:'XE4008',n:'EUC4008',cr:5,s:tt?sm(tt)+1:(l?sm(l)+2:sm(M['VRA2000'])+1),t:'l',pre:l?['XE4000']:[]};extra.push(o);var x=mkX(o);x.n0=o.n;x.cr0=5}
+function addEUC8(){mkEUC8();sel='XE4008';save();render()}
+function engTest(v){var c=M['XE0'];msg='';msgFor='XE0';sel='XE0';
+ if(v&&missing(c).length){msg='Primero aprueba EUC4000: Inglés se vuelve a rendir después.';render();return}
+ delete done['XE0'];delete fail['XE0'];
+ if(v=='ok'){done['XE0']=1;if(M['XE4008'])delX('XE4008')}
+ else if(v=='no'){fail['XE0']=1;mkEUC8();msg='Reprobaste Inglés por segunda vez: EUC4008 se agregó al semestre siguiente. Al aprobarlo cumples el requisito de inglés.'}
+ else if(M['XE4008'])delX('XE4008');
+ applyFix();save();render()}
+function dist(){var FGr=function(c){return /^(FG|XG)/.test(c.id)};
+ var G=[['Cursos de la licenciatura',function(c){return !c.ln&&!/^(OPT|TTF|FG|XG|XE|XL)/.test(c.id)&&c.id!='FIL2001'},310],['Formación general (incluye créditos libres)',function(c){return isPool(c)},60],['Créditos libres (cuentan hasta 10)',isLibre,10],['Formación filosófica',function(c){return c.id=='FIL2001'},10],['Formación teológica',function(c){return c.id=='TTF'},10],['Optativo de profundización',function(c){return c.id=='OPT'},10]];if(lineSel)G.push(['Quinto año · '+LN[lineSel].n,function(c){return !!c.ln},0]);
+ var lc0=libreCounts(),over=0,rows=G.map(function(g){var r=g[2],a=0,pl=0;C.filter(g[1]).forEach(function(c){pl+=c.cr;if(done[c.id]&&(!isLibre(c)||lc0[c.id]))a+=c.cr});if(!r)r=pl;if(g[2]==60&&a>60){over=a-60;a=60}if(g[0].indexOf('Quinto')==0&&lineSel=='PSI2409')r-=10;return '<tr><td>'+g[0]+'</td><td>'+a+' / '+r+(r&&a>=r?' ✓':'')+'</td><td><div class="mb"><i style="width:'+Math.min(100,r?a*100/r:0)+'%"></i></div></td></tr>'}).join('');
+ var ar={},ia=0;Object.keys(AREAS).forEach(function(k){ar[k]=0});C.forEach(function(c){if(FGr(c)&&done[c.id]){if(AREAS[area[c.id]])ar[area[c.id]]++;else if(area[c.id]=='ia')ia++}});var cov={},rem=ia;Object.keys(AREAS).forEach(function(k){if(ar[k])cov[k]=1;else if(rem>0){rem--;cov[k]=2}});
+ var all=Object.keys(AREAS).every(function(k){return cov[k]}),ing=done['VRA2000']||req.ing2||done['XE0']||done['XE4008'];var grad=credLic()>=400&&ing&&comOk()&&all,lic=licOk(),tit=titOk();
+ var lis=Object.keys(AREAS).map(function(k){return '<li class="'+(cov[k]?'on':'')+'">'+(cov[k]?'✓ ':'· ')+AREAS[k]+(cov[k]==2?' (interárea)':'')+'</li>'}).join('');var lib=0,lc=libreCounts();C.forEach(function(c){if(done[c.id]&&isLibre(c)&&lc[c.id])lib+=c.cr});lis+='<li class="'+(lib>=10?'on':'')+'">'+(lib>=10?'✓ ':'· ')+'Créditos libres ('+lib+' / 10 cr)</li>';
+ var st='<li class="'+(credLic()>=400?'on':'')+'"><div>Aprobar los 400 créditos de la malla</div></li>'
+ +'<li class="'+(ing?'on':'')+'"><div>Test de Inglés (Inglés en la malla) o curso EUC4008'+(done['VRA2000']?'':(engLvl?'<br>Se cumple al aprobar Inglés en el segundo intento; si lo repruebas, rindes EUC4008 el semestre siguiente y al aprobarlo cumples el requisito':''))+'</div></li>'
+ +'<li class="'+(comOk()?'on':'')+'"><div>Examen de Comunicación Escrita (Español en la malla)'+(done['VRA100C']?'':'<br><label><input type="checkbox" data-req="com"'+(req.com?' checked':'')+'> Lo aprobé</label>')+'</div></li>'
+ +'<li class="'+(all?'on':'')+'"><div>Áreas de Formación General (ingreso 2022 en adelante)<ul class="sub">'+lis+'</ul></div></li>'
+ +'<li class="'+(req.exl?'on':'')+'"><div>Examen de licenciatura (requisito para la práctica profesional)</div></li><li class="'+(lic?'on':'')+'"><div>Licenciatura en Psicología'+(grad&&!lic?' · requisitos cumplidos, falta el examen':'')+'</div></li>'
+ +'<li class="'+(C.some(function(c){return c.ln&&c.n0.indexOf('Práctica')==0&&done[c.id]})?'on':'')+'"><div>Quinto año: cursos y práctica de la línea'+(lineSel?' ('+LN[lineSel].n+')':'')+'</div></li><li class="'+(req.ext?'on':'')+'"><div>Examen de título (modalidad I) o continuidad al Magíster (modalidad II)</div></li><li class="'+(tit?'on':'')+'"><div>Título profesional de Psicólogo/a</div></li>';
+ document.getElementById('dist').innerHTML='<div class="row"><div><h3>Créditos por categoría</h3><table class="tb"><tbody>'+rows+'</tbody></table><p class="hint">Los créditos libres forman parte de la Formación General y cuentan hasta 10 créditos (por ejemplo, los primeros de inglés). Lo que pase de eso no cuenta para el avance curricular.</p>'+(libOver()?'<p class="hint no-t">Tienes '+libOver()+' créditos libres de más que no cuentan.</p>':'')+(over?'<p class="hint no-t">Tienes '+over+' créditos de Formación General de más que no cuentan.</p>':'')+'<p><button data-add="libre">Agregar crédito libre</button></p></div><div><h3>Requisitos de egreso</h3><ol class="steps">'+st+'</ol></div></div>'}
+function chips(){Array.prototype.forEach.call(document.querySelectorAll('[data-f]'),function(b){b.classList.toggle('on',b.getAttribute('data-f')==filt)})}
+function plural(n,a,b){return n+' '+(n>1?b:a)}
+function dflt(c){return /^(FG|TTF|OPT|VRA|X)/.test(c.id)?'b':(c.s%2?'o':'e')}
+function off(c){return offer[c.id]||dflt(c)}
+function okSem(c,s){var o=off(c);return o=='b'||(o=='o'?s%2==1:s%2==0)}
+function fit(c,s,dir){var lo=need(c)+1,t=s;if(dir<0){while(t>=lo&&!okSem(c,t))t--;if(t>=lo)return t}t=Math.max(s,lo);while(t<=12&&!okSem(c,t))t++;if(t>12){t=12;while(t>1&&!okSem(c,t))t--}return t}
+function setOffer(id,v){var c=M[id];msg='';msgFor=id;if(v==dflt(c))delete offer[id];else offer[id]=v;if(!done[id]){var f=fit(c,sm(c),1);if(f!=sm(c)){setPlan(id,f);msg=c.n+' pasó al semestre '+f+' según cuándo se dicta.'}applyFix()}save();render()}
+function toggle(id){if(id=='XE0'){engTest(done[id]?'':'ok');return}var c=M[id];msg='';msgFor=id;if(done[id]){delete done[id];applyFix()}else{if(c.ln&&c.n0.indexOf('Práctica')==0&&!req.exl){msg='Para cursar la práctica profesional primero debes aprobar el examen de licenciatura, que es requisito de la carrera.';render();return}var m=missing(c);if(m.length){msg='Para aprobar '+c.n+' primero debes aprobar: '+(isIni(c)&&!iniSel[c.id]?'los prerrequisitos de al menos una opción de Iniciación':m.map(function(p){return M[p].n}).join(', '))+'.';render();return}done[id]=1;delete fail[id]}save();render()}
+function moveTo(id,s,dir){var c=M[id];s=Math.max(1,Math.min(12,s));var n=need(c),f=fit(c,s,dir||1);msg='';msgFor=id;if(n>0&&s<=n){msg='No puedes inscribir '+c.n+' antes de aprobar sus prerrequisitos: lo dejé en el semestre '+f+'.'}else if(f!=s&&!dir){msg=c.n+' solo se dicta en semestres '+(off(c)=='o'?'impares':'pares')+': lo dejé en el semestre '+f+'.'}setPlan(id,f);var mv=applyFix().filter(function(x){return x!=id});if(mv.length)msg+=(msg?' ':'')+'Se movieron '+plural(mv.length,'ramo','ramos')+' que dependen de este para respetar los prerrequisitos.';save();render()}
+function failIt(id){if(id=='XE0'){engTest(fail[id]?'':'no');return}var c=M[id];msg='';msgFor=id;if(fail[id]){delete fail[id]}else{fail[id]=1;delete done[id];var s0=sm(c);setPlan(id,fit(c,s0+1,1));var mv=applyFix().filter(function(x){return x!=id});msg='Reprobado: '+c.n+' pasó al semestre '+sm(c)+(sm(c)-s0>1?' (se dicta una vez al año, así que esperas hasta ese semestre)':'')+'.'+(mv.length?' Esto atrasó '+plural(mv.length,'ramo','ramos')+' que dependen de él.':'')}save();render()}
+function rename(id,v){v=(v||'').trim();var c=M[id];if(v){c.n=v;names[id]=v}else{c.n=c.n0;delete names[id]}save();render()}
+document.getElementById('g').addEventListener('click',function(e){
+ if(e.target.closest('input,select'))return;var bb=e.target.closest('[data-bar]');if(bb){barToggle(bb.getAttribute('data-bar'));return}var k=e.target.closest('[data-chk]');if(k){e.stopPropagation();sel=k.getAttribute('data-chk');toggle(sel);return}
+ var c=e.target.closest('.c');if(c){var id=c.getAttribute('data-id');sel=sel==id?null:id;render()}
+});
+document.getElementById('g').addEventListener('keydown',function(e){if((e.key=='Enter'||e.key==' ')&&e.target.classList.contains('c')){e.preventDefault();var id=e.target.getAttribute('data-id');sel=sel==id?null:id;render();var n=document.querySelector('[data-id="'+id+'"]');if(n)n.focus()}});
+document.getElementById('g').addEventListener('change',function(e){var i=e.target.closest('[data-nm]');if(i)rename(i.getAttribute('data-nm'),i.value)});
+document.querySelector('.legend').addEventListener('click',function(e){var b=e.target.closest('[data-f]');if(b){filt=filt==b.getAttribute('data-f')?null:b.getAttribute('data-f');render()}});
+document.getElementById('g').addEventListener('change',function(e){var i=e.target.closest('[data-ar]');if(i)setFG(i.getAttribute('data-ar'),i.value)});
+document.getElementById('g').addEventListener('change',function(e){var t=e.target;if(t.getAttribute('data-eng'))engSelect(t.value);if(t.getAttribute('data-eng2'))engTest(t.value);var i=t.getAttribute('data-ini');if(i)setIni(i,t.value);var x=t.getAttribute('data-cr');if(x)setCr(x,+t.value)});
+document.getElementById('ln').addEventListener('change',function(e){if(e.target.getAttribute('data-ln')!==null)setLine(e.target.value)});
+document.getElementById('dist').addEventListener('click',function(e){if(e.target.closest('[data-add]'))addLibre()});
+document.getElementById('d').addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;var a=b.getAttribute('data-act'),id=b.getAttribute('data-id');if(a=='addfg')addFG(id);if(a=='addeuc8')addEUC8();if(a=='delx'){delX(id);sel=null;save();render()}});
+document.getElementById('d').addEventListener('change',function(e){if(e.target.id=='lv')setEng(e.target.value)});
+document.getElementById('dist').addEventListener('change',function(e){var k=e.target.getAttribute('data-req');if(k){req[k]=e.target.checked?1:0;save();render()}});
+document.getElementById('d').addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(b){sel=b.getAttribute('data-go');render()}});
+var rsT=null;document.getElementById('rs').onclick=function(){var b=this;if(!rsT){b.textContent='¿Seguro? Toca otra vez para borrar';rsT=setTimeout(function(){rsT=null;b.textContent='Borrar avance'},4000);return}clearTimeout(rsT);rsT=null;b.textContent='Borrar avance';done={};plan={};fail={};msg='';area={};crd={};req={};engLvl='';extra.slice().forEach(function(o){delX(o.id)});C.forEach(function(c){c.cr=c.cr0});iniSel={};lineSel='';['INI1','INI2'].forEach(function(i){M[i].pre=iniPre});buildLine();save();render()};
+render();
+</script>
+</body>
+</html>
